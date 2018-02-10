@@ -9,14 +9,14 @@ import seedu.addressbook.data.exception.IllegalValueException;
 public class Address {
 
     public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can only be in the specified format";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
 
     public final String value;
     private boolean isPrivate;
 
     /**
-     * Validates given address.
+     * Validates given address and
      *
      * @throws IllegalValueException if given address string is invalid.
      */
@@ -27,13 +27,34 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = trimmedAddress;
+        partitionAddress();
     }
-
     /**
      * Returns true if a given string is a valid person address.
      */
     public static boolean isValidAddress(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);
+    }
+
+    /**
+     *  Partitions address into its block, street, unit and postal code.
+     *
+     *  Assumes valid input.
+     */
+    private void partitionAddress() {
+        try {
+            String[] categories = value.split(",\\s", 4);
+        Block block = new Block(Integer.parseInt(categories[0]));
+        Street street = new Street(categories[1]);
+        Unit unit = new Unit(categories[2]);
+        PostalCode postalCode = new PostalCode(Integer.parseInt(categories[3]));
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+
+        }
+        catch(Exception exception){
+
+        }
     }
 
     @Override

@@ -4,8 +4,8 @@ package seedu.addressbook.data.person;
  * Represents a person's contact in the address book.
  */
 public abstract class Contact {
-    public final String value;
-    private boolean isPrivate;
+    public String value;
+    protected boolean isPrivate;
 
     /**
      * Returns true if the given string is a valid contact.

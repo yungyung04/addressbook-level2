@@ -16,7 +16,7 @@ public class Person implements ReadOnlyPerson {
     private Address address;
 
     /**
-     * For assigning a unique number to each Person object
+     * To be assigned a unique sequential number for each Person object
      */
     private int sequenceNumber;
     private static int nextSequenceNumber = 0;

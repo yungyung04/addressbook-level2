@@ -32,10 +32,9 @@ public class Person implements ReadOnlyPerson {
         this.address = address;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
         sequenceNumber = nextSequenceNumber;
-        System.out.println(sequenceNumber);
         updateNextSequenceNumber();
     }
-  
+
     private void updateNextSequenceNumber() {
         nextSequenceNumber++;
     }

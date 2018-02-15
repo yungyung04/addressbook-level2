@@ -225,7 +225,11 @@ public class Parser {
      * @param args full command args string
      */
     public static boolean canPartition(String args) {
-        return !(args.isEmpty()) && (args.indexOf(' ') != INDEX_OUT_OF_BOUND) && (args.substring(args.indexOf(' ')) != " ");
+        try {
+            return !(args.isEmpty()) && (args.substring(args.indexOf(' ')) != " ");
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
     }
 
     /**

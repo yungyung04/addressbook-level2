@@ -84,19 +84,6 @@ public class AddressBook {
     }
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #allTags} with any new tags found,
-     * Also updates the Tag objects in the person to point to those in {@link #allTags}.
-     *
-     * @param target person targeted for edit
-     * @throws DuplicatePersonException if an equivalent person who is not the target of edit already exists.
-     */
-    public void editPerson(Person toEdit, ReadOnlyPerson target) throws DuplicatePersonException {
-        allPersons.edit(toEdit, target);
-        syncTagsWithMasterList(toEdit);
-    }
-
-    /**
      * Returns true if an equivalent person exists in the address book.
      */
     public boolean containsPerson(ReadOnlyPerson key) {

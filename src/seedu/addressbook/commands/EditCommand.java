@@ -11,15 +11,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Removes a person's detail identified using its last displayed index from the address book
- * and adds the revised details as the last entry in the address book.
+ * Removes a person identified using its last displayed index from the address book
+ * and adds a new person as the last entry in the address book.
  */
 public class EditCommand extends Command{
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes a person's detail identified using it's last displayed index from the address book.\n"
-            + "and fills in the revised details"
+            + ": Removes a person identified using it's last displayed index from the address book.\n"
+            + "and adds a new person as the last entry in the address book."
             + "Parameters: INDEX NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [t/TAG]...\n"
             + "Example: " + COMMAND_WORD
             + " 1 John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney";
@@ -27,7 +27,7 @@ public class EditCommand extends Command{
     public static final String MESSAGE_EDITTED_PERSON_SUCCESS = "Editting result: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person editted;
+    private final Person toEdit;
 
     /**
      * Convenience constructor using raw values.
@@ -44,7 +44,7 @@ public class EditCommand extends Command{
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
         }
-        this.editted = new Person(
+        this.toEdit = new Person(
                 new Name(name),
                 new Phone(phone, isPhonePrivate),
                 new Email(email, isEmailPrivate),
@@ -54,16 +54,16 @@ public class EditCommand extends Command{
     }
 
     public ReadOnlyPerson getPerson() {
-        return editted;
+        return toEdit;
     }
 
     @Override
     public CommandResult execute() {
         try {
             final ReadOnlyPerson target = getTargetPerson();
-            addressBook.addPerson(editted);
+            addressBook.editPerson(toEdit, target);
             addressBook.removePerson(target);
-            return new CommandResult(String.format(MESSAGE_EDITTED_PERSON_SUCCESS, editted));
+            return new CommandResult(String.format(MESSAGE_EDITTED_PERSON_SUCCESS, toEdit));
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (UniquePersonList.PersonNotFoundException pnfe) {

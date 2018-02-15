@@ -18,7 +18,7 @@ public class EditCommand extends Command{
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes a person identified using it's last displayed index from the address book.\n"
+            + ": Removes a person identified using it's last displayed index from the address book\n"
             + "and adds a new person as the last entry in the address book."
             + "Parameters: INDEX NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [t/TAG]...\n"
             + "Example: " + COMMAND_WORD

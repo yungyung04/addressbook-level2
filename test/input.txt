@@ -55,6 +55,27 @@
   add Esther Potato p/555555 e/esther@not.a.real.potato pa/555, epsilon street t/tubers t/starchy
 
 ##########################################################
+# test edit command
+##########################################################
+
+  # should catch invalid args format
+  edit
+  edit 1 VALID_NAME
+
+  # should catch invalid index
+  edit -1
+  edit VALID_NAME
+
+  # should catch attempt to insert duplicate person
+  edit 1 Adam Brown p/111111 e/adam@gmail.com a/111, alpha street
+  edit 3 Adam Brown p/111111 e/adam@gmail.com a/111, alpha street
+
+  # should edit propperly
+  edit 1 Adam Pink pp/111111 e/adampink@gmail.com a/111, alphastreet
+  list
+  edit 5 Adam Indigo p/111111 pe/adam@gmail.com a/111, alphastreet t/blue
+
+##########################################################
 # test view/viewall persons command
 ##########################################################
 

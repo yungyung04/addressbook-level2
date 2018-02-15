@@ -21,6 +21,7 @@ public class Parser {
 
     private static final int INDEX_INCORRECT_PERSON_DATA = 0;
     private static final int INDEX_EDITTED_PERSON_DATA = 1;
+    private static final int INDEX_OUT_OF_BOUND = 0;
 
     public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
 
@@ -174,12 +175,15 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the add person command.
+     * Parses arguments in the context of the edit person command.
      *
      * @param args full command args string
      * @return the prepared command
      */
     private Command prepareEdit(String args) {
+        if(!canPartition(args.trim() )) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
         String[] partitions = args.trim().split("\\s", 2);
         int targetIndex = 0; //must be initialized
         try {
@@ -213,6 +217,15 @@ public class Parser {
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
+    }
+
+    /**
+     * Returns true if a String can be partitioned into 2 or more parts given ' ' as the seperator.
+     *
+     * @param args full command args string
+     */
+    public static boolean canPartition(String args) {
+        return !(args.isEmpty()) && (args.indexOf(' ') != INDEX_OUT_OF_BOUND) && (args.substring(args.indexOf(' ')) != " ");
     }
 
     /**

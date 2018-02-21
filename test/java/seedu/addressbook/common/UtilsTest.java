@@ -46,25 +46,29 @@ public class UtilsTest {
 
     @Test
     public void isAnyNull() throws Exception{
-        //empty list
-        assertIsNotNull();
+        // empty list
+        assertFalse(Utils.isAnyNull());
 
-        //contains null
-        assertIsNull(null);
-        //assertIsNull("a", null);
-        //assertIsNull(null, "a");
+        // Any non-empty list
+        assertFalse(Utils.isAnyNull(new Object(), new Object()));
+        assertFalse(Utils.isAnyNull("test"));
+        assertFalse(Utils.isAnyNull(""));
 
-        //does not contain null
-        assertIsNotNull("a");
-        assertIsNotNull("a", "b", "c");
+        // non empty list with just one null at the beginning
+        assertTrue(Utils.isAnyNull((Object) null));
+        assertTrue(Utils.isAnyNull(null, "", new Object()));
+        assertTrue(Utils.isAnyNull(null, new Object(), new Object()));
 
-    }
+        // non empty list with nulls in the middle
+        assertTrue(Utils.isAnyNull(new Object(), null, null, "test"));
+        assertTrue(Utils.isAnyNull("", null, new Object()));
 
-    private void assertIsNull(Object... objects) {
-        assertTrue(Utils.isAnyNull(objects));
-    }
+        // non empty list with one null as the last element
+        assertTrue(Utils.isAnyNull("", new Object(), null));
+        assertTrue(Utils.isAnyNull(new Object(), new Object(), null));
 
-    private void assertIsNotNull(Object... objects) {
-        assertFalse(Utils.isAnyNull(objects));
+        // confirms nulls inside the list are not considered
+        List<Object> nullList = Arrays.asList((Object) null);
+        assertFalse(Utils.isAnyNull(nullList));
     }
 }

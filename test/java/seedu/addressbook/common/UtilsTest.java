@@ -55,7 +55,6 @@ public class UtilsTest {
         //Objects do not contain null
         assertIsNotNull("a");
         assertIsNotNull("a", "b", "c");
-
     }
 
     private void assertIsNull(Object... objects) {

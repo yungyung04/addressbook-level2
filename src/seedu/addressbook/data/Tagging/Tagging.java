@@ -35,7 +35,7 @@ public class Tagging {
     /**
      * Records recently removed taggings.
      */
-    private void finalize() throws Throwable {
+    protected void finalize() {
         recordDeletedTagging();
     }
 
@@ -43,7 +43,7 @@ public class Tagging {
      * @return the printable form of all added/deleted taggings.
      */
     public static String getPrintableResult() {
-        String printableTaggings;
+        String printableTaggings = new String();
 
         for (String tagging : toBePrintedTaggings) {
             printableTaggings = tagging + "\n";
@@ -54,12 +54,12 @@ public class Tagging {
     /**
      * Clears all element in the printable list.
      */
-    public static reset() {
+    public static void reset() {
         toBePrintedTaggings.clear();
     }
 
     private void recordDeletedTagging() {
-        toBePrintedTaggings.add(person.getName().toString() + " " + tag.toString());
+        toBePrintedTaggings.add("- " + person.getName().toString() + " " + tag.toString());
         uniqueTaggingList.remove(getTargetIndex());
     }
 
@@ -82,7 +82,7 @@ public class Tagging {
 
     private void recordNewTagging(Person person, Tag tag) {
         uniqueTaggingList.add(new Tagging(person, tag));
-        toBePrintedTaggings.add(person.getName().toString() + " " + tag.toString());
+        toBePrintedTaggings.add("+ " + person.getName().toString() + " " + tag.toString());
     }
 
     public Person getPerson() {
